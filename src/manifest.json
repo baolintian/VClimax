@@ -1,0 +1,43 @@
+{
+    "name": "VClimax",
+    "version": "1.0.0",
+    "description": "找出最精彩的片段，Make Bilibili Great Again!",
+    "icons": {
+        "128": "assets/logo.png"
+    },
+    
+    "manifest_version": 2,
+    "minimum_chrome_version": "32",
+    
+    "permissions": [
+        "*://*.bilibili.com/*",
+        "webRequestBlocking",
+        "webRequest",
+        "notifications",
+        "activeTab",
+        "tabs"
+    ],
+    
+    "options_page": "options/options.html",
+    "browser_action": {
+        "default_icon": "assets/logo.png"
+    },
+    "content_scripts": [
+        {
+          "matches": [
+            "http://www.bilibili.com/*",
+            "https://www.bilibili.com/*"
+          ],
+          "js": [
+            "jquery.min.js",
+            "content.js"
+          ],
+          "css":[
+            "style.css"
+          ]
+        }
+      ],
+    "background": {
+        "page": "core/background.html"
+    }
+}

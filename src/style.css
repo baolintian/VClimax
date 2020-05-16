@@ -1,0 +1,11 @@
+#ykPlayer .ynk-playback-control,
+#r-con .ynk-playback-control
+#flashbox .ynk-playback-control {
+    display: none;
+}
+
+#ykPlayer:hover .ynk-playback-control,
+
+#flashbox:hover .ynk-playback-control {
+    display: inherit;
+}
