@@ -36,15 +36,14 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
         container.appendChild(code2);
         taolus.appendChild(container);
     }
-    id('threshold').value=localStorage['THRESHOLD'];
-    id('danmu-fuzz').checked=localStorage['DANMU_FUZZ']==='on';
-    id('trim-ending').checked=localStorage['TRIM_ENDING']==='on';
-    id('trim-space').checked=localStorage['TRIM_SPACE']==='on';
-    id('remove-seek').checked=localStorage['REMOVE_SEEK']==='on';
+    
+
+    id('sample-interval').value = localStorage['SAMPLE_INTERVAL'];
+    id('radis').value = localStorage['RADIS'];
+    id('filter-threshold').value = localStorage['FILTER_THRESHOLD'];
+    id('min-interval').value = localStorage['MIN_INTERVAL'];
     id('flash-notif').checked=localStorage['FLASH_NOTIF']==='on';
-    id('danmu-mark').value=localStorage['DANMU_MARK'];
-    id('popup-badge').value=localStorage['POPUP_BADGE'];
-    id('proc-type7').checked=localStorage['PROC_TYPE7']==='on';
+
 
     id('newtaolu-form').addEventListener('submit',function(e) {
         e.preventDefault();
@@ -55,19 +54,16 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
     });
     
     function update() {
-        localStorage['THRESHOLD']=parseInt(id('threshold').value)>0?parseInt(id('threshold').value):15;
-        localStorage['TRIM_ENDING']=id('trim-ending').checked?'on':'off';
-        localStorage['TRIM_SPACE']=id('trim-space').checked?'on':'off';
-        localStorage['DANMU_FUZZ']=id('danmu-fuzz').checked?'on':'off';
-        localStorage['REMOVE_SEEK']=id('remove-seek').checked?'on':'off';
+        
         localStorage['FLASH_NOTIF']=id('flash-notif').checked?'on':'off';
-        localStorage['DANMU_MARK']=id('danmu-mark').value;
-        localStorage['POPUP_BADGE']=id('popup-badge').value;
-        localStorage['PROC_TYPE7']=id('proc-type7').checked?'on':'off';
+        localStorage['SAMPLE_INTERVAL'] = parseInt(id('sample-interval').value)>0?parseInt(id('sample-interval').value):30;
+        localStorage['FILTER_THRESHOLD'] = parseInt(id('filter-threshold').value)>0?parseInt(id('filter-threshold').value):50;
+        localStorage['RADIS'] = parseInt(id('radis').value)>0?parseInt(id('radis').value):10;
+        localStorage['MIN_INTERVAL'] = parseInt(id('min-interval').value)>0?parseInt(id('min-interval').value):30;
         reload();
     }
     
-    ['threshold','danmu-fuzz','trim-ending','trim-space','remove-seek','flash-notif','danmu-mark','popup-badge','proc-type7']
+    ['filter-threshold', 'flash-notif', 'sample-interval', 'radis', 'min-interval']
             .forEach(function(elem) {
         id(elem).addEventListener('change',update);
     });

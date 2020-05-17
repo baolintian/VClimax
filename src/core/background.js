@@ -24,12 +24,14 @@ function parse_danmu_url(url) {
     else
         return null;
 }
+
 function fromholyjson(txt) {
     var item=JSON.parse(txt);
     for(var key in item)
         item[key]=RegExp(item[key]);
     return item;
 }
+
 function toholyjson(obj) {
     var item={};
     for(var key in obj)
@@ -38,27 +40,28 @@ function toholyjson(obj) {
 }
 
 function loadconfig() {
-    window.THRESHOLD=parseInt(localStorage['THRESHOLD'])||15;
-    window.MAX_DIST=1+(localStorage['DANMU_FUZZ']==='on')*4;
-    window.TRIM_ENDING=localStorage['TRIM_ENDING']==='on';
-    window.TRIM_SPACE=localStorage['TRIM_SPACE']==='on';
+    
+
     window.TAOLUS=fromholyjson(localStorage['TAOLUS'])||{};
-    window.REMOVE_SEEK=localStorage['REMOVE_SEEK']==='on';
     window.FLASH_NOTIF=localStorage['FLASH_NOTIF']==='on';
-    window.DANMU_MARK=localStorage['DANMU_MARK'];
-    window.POPUP_BADGE=localStorage['POPUP_BADGE'];
-    window.PROC_TYPE7=localStorage['PROC_TYPE7']==='on';
+
+    window.SAMPLE_INTERVAL = localStorage['SAMPLE_INTERVAL'];
+    window.RADIS = localStorage['RADIS'];
+    window.MIN_INTERVAL = localStorage['MIN_INTERVAL'];
+    window.FILTER_THRESHOLD = localStorage['FILTER_THRESHOLD'];
+
 }
-localStorage['THRESHOLD']=localStorage['THRESHOLD']||15;
-localStorage['DANMU_FUZZ']=localStorage['DANMU_FUZZ']||'on';
-localStorage['TRIM_ENDING']=localStorage['TRIM_ENDING']||'on';
-localStorage['TRIM_SPACE']=localStorage['TRIM_SPACE']||'on';
+
+
 localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":".*(空降|降落).*"}';
-localStorage['REMOVE_SEEK']=localStorage['REMOVE_SEEK']||'on';
 localStorage['FLASH_NOTIF']=localStorage['FLASH_NOTIF']||'on';
-localStorage['DANMU_MARK']=localStorage['DANMU_MARK']||'suffix';
-localStorage['POPUP_BADGE']=localStorage['POPUP_BADGE']||'percent';
-localStorage['PROC_TYPE7']=localStorage['PROC_TYPE7']||'on';
+
+
+
+localStorage['SAMPLE_INTERVAL'] = localStorage['SAMPLE_INTERVAL']||30;
+localStorage['RADIS'] = localStorage['RADIS']||10;
+localStorage['MIN_INTERVAL'] = localStorage['MIN_INTERVAL']||5;
+localStorage['FILTER_THRESHOLD'] = localStorage['FILTER_THRESHOLD']||50;
 loadconfig();
 
 chrome.notifications.onButtonClicked.addListener(function(notifid,btnindex) {
@@ -114,11 +117,12 @@ function load_danmaku(id,tabid) {
         setbadge('NET!',ERROR_COLOR,tabid);
         throw e;
     }
-
+    
     filter_segment = parse(xhr.responseXML, tabid);
 
     console.log(filter_segment);
     setTimeout(function(){ send_result(); }, 2000);
+    
     var serializer=new XMLSerializer();
     if(xhr.status===200 && xhr.responseXML) {
         return 'data:text/xml;charset=utf-8;base64,'+

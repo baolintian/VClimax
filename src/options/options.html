@@ -85,34 +85,27 @@
     <table>
         <tbody>
             <tr>
-                <td>弹幕合并</td>
+                <td>推荐常数设置</td>
                 <td>
                     <p>
-                        <label for="threshold">时间阈值：</label>
-                        合并
-                        <input id="threshold" type="number" min="0" step="1">
-                        秒之内的重复弹幕
+                        <label for="filter-threshold">过滤阈值：</label>
+                        弹幕集中权重，无实际含义，可根据自身情况实时调节：
+                        <input id="filter-threshold" type="number" min="0" step="10">
                     </p>
                     <p>
-                        <input id="trim-ending" type="checkbox">
-                        <label for="trim-ending">比较时忽略末尾标点</label>
-                        <span>/ 如 "<code>LL大法好~</code>" + "<code>LL大法好！！</code>" → "<code>LL大法好 [x2]</code>"</span>
+                        <label for="sample-interval">采样区间长度：</label>
+                        采样区间长度：
+                        <input id="sample-interval" type="number" min="0" step="1">
                     </p>
                     <p>
-                        <input id="trim-space" type="checkbox">
-                        <label for="trim-space">比较时忽略空格</label>
-                        <span>/ 对 "<code>立 &nbsp; 体 &nbsp; 弹 &nbsp; 幕</code>" 和
-                            "<code> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 漂移~</code>" 有奇效</span>
+                        <label for="radis">精彩片段往前跳转秒数：</label>
+                        确定精彩片段后，往前跳转若干秒：
+                        <input id="radis" type="number" min="0" step="10">
                     </p>
                     <p>
-                        <input id="danmu-fuzz" type="checkbox">
-                        <label for="danmu-fuzz">合并相似弹幕</label>
-                        <span>/ 如 "<code>那你很棒哦</code>" + "<code>那你真棒啊</code>" → "<code>那你很棒哦 [x2]</code>"（会误伤计数君）</span>
-                    </p>
-                    <p>
-                        <input id="proc-type7" type="checkbox">
-                        <label for="proc-type7">合并高级弹幕</label>
-                        <span>/ 选择此项后可能会影响部分高级弹幕的表现效果</span>
+                        <label for="min-interval">上一个采样区间间隔：</label>
+                        上一个采样区间得间隔：
+                        <input id="min-interval" type="number" min="0" step="10">
                     </p>
                 </td>
             </tr>
@@ -131,37 +124,10 @@
                     <div id="taolus"></div>
                 </td>
             </tr>
-            <tr>
-                <td>显示设置</td>
-                <td>
-                    <p>
-                        <label for="danmu-mark">弹幕数量标记 </label>
-                        <select id="danmu-mark">
-                            <option value="suffix">显示在结尾</option>
-                            <option value="prefix">显示在开头</option>
-                            <option value="off">不显示</option>
-                        </select>
-                        <span>/ 合并的弹幕显示为 "<code>AAA [x2]</code>" 或 "<code>[x2] AAA</code>" 或 "<code>AAA</code>"</span>
-                    </p>
-                    <p>
-                        <label for="popup-badge">扩展程序角标 </label>
-                        <select id="popup-badge">
-                            <option value="off">不显示角标</option>
-                            <option value="count">显示被合并弹幕数量</option>
-                            <option value="percent">显示被合并弹幕百分比</option>
-                        </select>
-                        <span>/ 在右上角的 pakku 图标上显示合并了多少弹幕</span>
-                    </p>
-                </td>
-            </tr>
+            
             <tr>
                 <td>附加设置</td>
                 <td>
-                    <p>
-                        <input id="remove-seek" type="checkbox">
-                        <label for="remove-seek">屏蔽跳转脚本</label>
-                        <span>/ 将会过滤包含 <code>Player.seek</code> 内容的代码弹幕</span>
-                    </p>
                     <p>
                         <input id="flash-notif" type="checkbox">
                         <label for="flash-notif">Flash 播放器兼容提示</label>

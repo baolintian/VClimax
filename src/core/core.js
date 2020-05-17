@@ -94,16 +94,16 @@ function parse(dom,tabid) {
     });
 
     //TODO: 将这些参数供使用者选择
-    var interval = 30;
-    var radis = 10;
-    var min_interval = 5;
+    var interval = localStorage['SAMPLE_INTERVAL'];//default 30;
+    var radis = localStorage['RADIS'];//10
+    var min_interval = localStorage['MIN_INTERVAL'];//5
 
     var max_number = 0;
     var max_number_index = 0;
 
     
     var tot_segment = 0;
-    var threshold = 50;
+    var threshold = localStorage['FILTER_THRESHOLD'];//50
     
 
     var segment_sample = new Array(20);

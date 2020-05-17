@@ -2,7 +2,7 @@
 .ynk-playback-control{
     background-color: #eee;
     font-family: '微软雅黑', 'Microsoft Yahei', '黑体', sans-serif;
-    
+    font-weight: bold;
 }
 li:hover {
     background-color: #f7f7f7;
