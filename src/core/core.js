@@ -53,16 +53,17 @@ function parse(dom,tabid) {
                 pre = time_stamp[i][j];
                 continue;
             }
+            //两个匹配的关键词的时间间隔不能超过5s
             if(time_stamp[i][j]-time_stamp[i][j-1]>5){
                 if(count-1>=3){
-                    extra_keypoint[i].push(pre);
+                    extra_keypoint[i].push(Math.max(pre-5, 0));
                 }
                 pre = time_stamp[i][j];
                 count = 1;
             }
         }
         if(pre !=-1&&count>=3)
-            extra_keypoint[i].push(pre);
+            extra_keypoint[i].push(Math.max(pre-5, 0));
     }
     var result_set = {};
     var index = 0;
@@ -95,7 +96,7 @@ function parse(dom,tabid) {
     });
 
     //TODO: 将这些参数供使用者选择
-    var interval = localStorage['SAMPLE_INTERVAL'];//default 30;
+    var interval = localStorage['SAMPLE_INTERVAL'];//default 20;
     var radis = localStorage['RADIS'];//10
     var min_interval = localStorage['MIN_INTERVAL'];//5
 

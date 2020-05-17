@@ -1,6 +1,6 @@
 var videoSeletor;
 var videoContainerSelector;
-
+//www.bilibili.com
 var urlHost = window.location.host;
 var filter_segment;
 
@@ -24,13 +24,13 @@ function sec2format(x){
     return printf("%02d:%02d:%02d", h, m, s)+x.toFixed(2).substring(1);
 }
 
+//if want to parse other video website, may change the selector
 if (urlHost.indexOf("bilibili") > -1) {
     videoSeletor = "#bilibiliPlayer video";
     videoContainerSelector = "#bilibiliPlayer .bilibili-player-video";
 } 
 
 var $video = document.querySelector(videoSeletor);
-
 
 
 function insert_before_child(container, pos){
@@ -42,14 +42,20 @@ function insert_before_child(container, pos){
 
 var TAOLUS={};
 
+var max_wait_time = 0;
 while(true){
     if($('div').is('.plp-r')||$('div').is('.r-con')){
         chrome.runtime.sendMessage({"message": "get_result"});
         break;
     }
+    else if(max_wait_time>5){
+        console.log("can't locate video, may not have a video");
+        break;
+    }
     else{
         var $video = document.querySelector(videoSeletor);
         setTimeout("", 500);
+        max_wait_time+=1;
     }
 }
 
@@ -65,6 +71,7 @@ chrome.runtime.onMessage.addListener(
             else if($('div').is('.r-con'))
                 video_part_dom = ".r-con";
             var obj = document.body.querySelector("#app "+video_part_dom);
+            //if the page dosen't refresh, remove the odd one.
             if(exist) {
                 var $video = document.querySelector(videoSeletor);
                 var has = false;
@@ -84,8 +91,9 @@ chrome.runtime.onMessage.addListener(
             }
             var pos = document.getElementById("danmukuBox");
             var pos1 = document.getElementById("app");
+
+            //add recommend.
             var container = document.createElement("DIV");
-            
             container.style.zIndex = "auto";
             container.innerHTML = "一共推荐"+request.result[0].length+"个片段";
             filter_segment = request.result[0];
@@ -95,8 +103,13 @@ chrome.runtime.onMessage.addListener(
                 upBtn.appendChild(document.createTextNode("第"+i+"个>>   "+sec2format(filter_segment[i]["start"])));
                 upBtn.addEventListener("click", function () {
                     console.log($(this).attr("value"));
+                    max_wait_time = 0;
                     while($video === undefined){
                         $video = document.querySelector(videoSeletor);
+                        max_wait_time+=1;
+                        setTimeout("", 500);
+                        if(max_wait_time > 5)
+                            break;
                     }
                     $video.currentTime = $(this).attr("value");
                 });
@@ -104,8 +117,9 @@ chrome.runtime.onMessage.addListener(
             }
             container.className = "VClimax-control";
             insert_before_child(container, pos);
-            var result_set = request.result[1];
 
+            //add other part
+            var result_set = request.result[1];
             for(var name in result_set){
                 var container = document.createElement("DIV");
                 container.style.zIndex = "auto";
@@ -118,8 +132,13 @@ chrome.runtime.onMessage.addListener(
                     upBtn.value = result_set[name][i];
                     upBtn.appendChild(document.createTextNode("第"+i+"个>>   "+sec2format(result_set[name][i])));
                     upBtn.addEventListener("click", function () {
+                        max_wait_time = 0;
                         while($video === undefined){
                             $video = document.querySelector(videoSeletor);
+                            max_wait_time+=1;
+                            setTimeout("", 500);
+                            if(max_wait_time > 5)
+                                break;
                         }
                         $video.currentTime = $(this).attr("value");
                     });

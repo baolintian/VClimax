@@ -59,10 +59,10 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
     function update() {
         
         localStorage['FLASH_NOTIF']=id('flash-notif').checked?'on':'off';
-        localStorage['SAMPLE_INTERVAL'] = parseInt(id('sample-interval').value)>0?parseInt(id('sample-interval').value):30;
+        localStorage['SAMPLE_INTERVAL'] = parseInt(id('sample-interval').value)>0?parseInt(id('sample-interval').value):20;
         localStorage['FILTER_THRESHOLD'] = parseInt(id('filter-threshold').value)>0?parseInt(id('filter-threshold').value):50;
         localStorage['RADIS'] = parseInt(id('radis').value)>0?parseInt(id('radis').value):10;
-        localStorage['MIN_INTERVAL'] = parseInt(id('min-interval').value)>0?parseInt(id('min-interval').value):30;
+        localStorage['MIN_INTERVAL'] = parseInt(id('min-interval').value)>0?parseInt(id('min-interval').value):5;
         reload();
     }
     

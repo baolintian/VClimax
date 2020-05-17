@@ -53,12 +53,12 @@ function loadconfig() {
 }
 
 
-localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":".*(空降|降落).*"}';
+localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":".*(空降|降落).*", "搞笑": ".*(哈哈)+.*"}';
 localStorage['FLASH_NOTIF']=localStorage['FLASH_NOTIF']||'on';
 
 
 
-localStorage['SAMPLE_INTERVAL'] = localStorage['SAMPLE_INTERVAL']||30;
+localStorage['SAMPLE_INTERVAL'] = localStorage['SAMPLE_INTERVAL']||20;
 localStorage['RADIS'] = localStorage['RADIS']||10;
 localStorage['MIN_INTERVAL'] = localStorage['MIN_INTERVAL']||5;
 localStorage['FILTER_THRESHOLD'] = localStorage['FILTER_THRESHOLD']||50;
@@ -139,6 +139,7 @@ function send_result(){
     });
 }
 
+//click the icon
 chrome.browserAction.onClicked.addListener(function(tab){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var activeTab = tabs[0];
