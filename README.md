@@ -22,7 +22,8 @@ idea来源: [如何自动做一期梗百科](https://www.bilibili.com/video/BV1Y
 
 ## 下载安装
 
-
+Google商店目前还在审核中。
+V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/download/v1.0.0/VCLlimax.crx)中下载使用。
 
 
 
@@ -110,7 +111,7 @@ idea来源: [如何自动做一期梗百科](https://www.bilibili.com/video/BV1Y
 
 [pakku](<https://github.com/xmcp/pakku.js>)
 
-[[chrome-extension-video-playback-rate-controller](https://github.com/YiNanKai/chrome-extension-video-playback-rate-controller)](<https://github.com/YiNanKai/chrome-extension-video-playback-rate-controller>)
+[chrome-extension-video-playback-rate-controller](https://github.com/YiNanKai/chrome-extension-video-playback-rate-controller)
 
 
 
