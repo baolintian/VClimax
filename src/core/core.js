@@ -1,3 +1,4 @@
+// (C) 2020 @babydragon. THIS PROJECT IS LICENSED UNDER GPL VERSION 3. SEE `LICENSE.txt`.
 
 function parse(dom,tabid) {
     chrome.browserAction.setTitle({

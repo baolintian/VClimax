@@ -1,5 +1,5 @@
 // (C) 2017 @xmcp. THIS PROJECT IS LICENSED UNDER GPL VERSION 3. SEE `LICENSE.txt`.
-
+// (C) 2020 @babydragon. THIS PROJECT IS LICENSED UNDER GPL VERSION 3. SEE `LICENSE.txt`.
 var GLOBAL_SWITCH=true;
 
 var DANMU_URL_FILTER=['*://comment.bilibili.com/*','*://api.bilibili.com/x/v1/dm/*','*://api.bilibili.com/x/v2/dm/*']
@@ -121,7 +121,7 @@ function load_danmaku(id,tabid) {
     filter_segment = parse(xhr.responseXML, tabid);
 
     console.log(filter_segment);
-    setTimeout(function(){ send_result(); }, 2000);
+    setTimeout(function(){ send_result(); }, 2500);
     
     var serializer=new XMLSerializer();
     if(xhr.status===200 && xhr.responseXML) {

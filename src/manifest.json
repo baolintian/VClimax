@@ -30,11 +30,11 @@
             "https://www.bilibili.com/*"
           ],
           "js": [
-            "jquery.min.js",
-            "content.js"
+            "./content/jquery.min.js",
+            "./content/content.js"
           ],
           "css":[
-            "style.css"
+            "./content/style.css"
           ]
         }
     ],
