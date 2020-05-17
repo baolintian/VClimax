@@ -28,35 +28,106 @@ if (urlHost.indexOf("bilibili") > -1) {
     videoSeletor = "#bilibiliPlayer video";
     videoContainerSelector = "#bilibiliPlayer .bilibili-player-video";
 } 
+
 var $video = document.querySelector(videoSeletor);
+
+
+
+function insert_before_child(container, pos){
+    if($('div').is('.plp-r'))
+        document.body.querySelector("#app .plp-r").insertBefore(container, pos);
+    else if($('div').is('.r-con'))
+        document.body.querySelector("#app .r-con").insertBefore(container, pos);
+}
+
+var TAOLUS={};
+
+while(true){
+    if($('div').is('.plp-r')||$('div').is('.r-con')){
+        chrome.runtime.sendMessage({"message": "get_result"});
+        break;
+    }
+    else{
+        var $video = document.querySelector(videoSeletor);
+        setTimeout("", 500);
+    }
+}
+
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if( request.message === "loaded" ) {
-            var exist = document.getElementById("ynk-playback-control");
-            if(exist != null) 
-                return ;
-            console.log("in3");
+
+            var exist = $('div').is('.VClimax-control');
+            var video_part_dom;
+            if($('div').is('.plp-r'))
+                video_part_dom = ".plp-r";
+            else if($('div').is('.r-con'))
+                video_part_dom = ".r-con";
+            var obj = document.body.querySelector("#app "+video_part_dom);
+            if(exist) {
+                var $video = document.querySelector(videoSeletor);
+                var has = false;
+                while(true){
+                    for(i=0; i<obj.childElementCount; i++){
+                        if(obj.childNodes[i].className === "VClimax-control"){
+                            obj.removeChild(obj.childNodes[i]);
+                            has = true;
+                            break;
+                        }
+                    }
+                    if(has){
+                        has = false;
+                    }
+                    else break;
+                }
+            }
             var pos = document.getElementById("danmukuBox");
+            var pos1 = document.getElementById("app");
             var container = document.createElement("DIV");
             
             container.style.zIndex = "auto";
-            container.innerHTML = "一共捕获到"+request.result.length+"个片段";
-            filter_segment = request.result;
-            for(i=0, len=request.result.length; i<len; i++){
+            container.innerHTML = "一共推荐"+request.result[0].length+"个片段";
+            filter_segment = request.result[0];
+            for(i=0, len=request.result[0].length; i<len; i++){
                 var upBtn = document.createElement("LI");
                 upBtn.value = filter_segment[i]["start"];
-                upBtn.index = i;
                 upBtn.appendChild(document.createTextNode("第"+i+"个>>   "+sec2format(filter_segment[i]["start"])));
                 upBtn.addEventListener("click", function () {
+                    console.log($(this).attr("value"));
+                    while($video === undefined){
+                        $video = document.querySelector(videoSeletor);
+                    }
                     $video.currentTime = $(this).attr("value");
                 });
                 container.appendChild(upBtn);
             }
-            
-            container.className = "ynk-playback-control";
+            container.className = "VClimax-control";
+            insert_before_child(container, pos);
+            var result_set = request.result[1];
 
-            document.body.querySelector("#app .r-con").insertBefore(container, pos);
+            for(var name in result_set){
+                var container = document.createElement("DIV");
+                container.style.zIndex = "auto";
+                container.innerHTML = name;
+                var len=result_set[name].length;
+                if(len===0)
+                    continue;
+                for(i=0 ; i<len; i++){
+                    var upBtn = document.createElement("LI");
+                    upBtn.value = result_set[name][i];
+                    upBtn.appendChild(document.createTextNode("第"+i+"个>>   "+sec2format(result_set[name][i])));
+                    upBtn.addEventListener("click", function () {
+                        while($video === undefined){
+                            $video = document.querySelector(videoSeletor);
+                        }
+                        $video.currentTime = $(this).attr("value");
+                    });
+                    container.appendChild(upBtn);
+                }
+                container.className = "VClimax-control";
+                insert_before_child(container, pos);
+            }
         }
     }
 );

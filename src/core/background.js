@@ -6,7 +6,7 @@ var DANMU_URL_FILTER=['*://comment.bilibili.com/*','*://api.bilibili.com/x/v1/dm
 var TRAD_DANMU_URL_RE=/(.+):\/\/comment\.bilibili\.com\/(?:rc\/)?(?:dmroll,[\d\-]+,)?(\d+)(?:\.xml)?(\?debug)?$/;
 var NEW_DANMU_NORMAL_URL_RE=/(.+):\/\/api\.bilibili\.com\/x\/v1\/dm\/list.so\?oid=(\d+)(\&debug)?$/;
 var NEW_DANMU_HISTORY_URL_RE=/(.+):\/\/api\.bilibili\.com\/x\/v2\/dm\/history\?type=\d+&oid=(\d+)&date=[\d\-]+(\&debug)?$/;
-var filter_segment;
+var filter_segment=[];
 
 function parse_danmu_url(url) {
     // var protocol=ret[1], cid=ret[2], debug=ret[3], type=ret[4];
@@ -53,7 +53,7 @@ localStorage['THRESHOLD']=localStorage['THRESHOLD']||15;
 localStorage['DANMU_FUZZ']=localStorage['DANMU_FUZZ']||'on';
 localStorage['TRIM_ENDING']=localStorage['TRIM_ENDING']||'on';
 localStorage['TRIM_SPACE']=localStorage['TRIM_SPACE']||'on';
-localStorage['TAOLUS']=localStorage['TAOLUS']||'{"233...":"^23{2,}$","666...":"^6{3,}$","FFF...":"^[fF]+$","hhh...":"^[hH]+$"}';
+localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":".*(空降|降落).*"}';
 localStorage['REMOVE_SEEK']=localStorage['REMOVE_SEEK']||'on';
 localStorage['FLASH_NOTIF']=localStorage['FLASH_NOTIF']||'on';
 localStorage['DANMU_MARK']=localStorage['DANMU_MARK']||'suffix';
@@ -106,13 +106,19 @@ function load_danmaku(id,tabid) {
     
     var xhr=new XMLHttpRequest();
     console.log('load http://comment.bilibili.com/'+id+'.xml');
-    xhr.open('get','http://comment.bilibili.com/'+id+'.xml',false);
-    xhr.send();
+    var url = 'http://comment.bilibili.com/'+id+'.xml';
+    try {
+        xhr.open('get',url,false);
+        xhr.send();
+    } catch(e) {
+        setbadge('NET!',ERROR_COLOR,tabid);
+        throw e;
+    }
 
     filter_segment = parse(xhr.responseXML, tabid);
 
     console.log(filter_segment);
-    
+    setTimeout(function(){ send_result(); }, 2000);
     var serializer=new XMLSerializer();
     if(xhr.status===200 && xhr.responseXML) {
         return 'data:text/xml;charset=utf-8;base64,'+
@@ -122,14 +128,20 @@ function load_danmaku(id,tabid) {
     }
 }
 
-chrome.browserAction.onClicked.addListener(function(tab){
-    console.log("in1");
+function send_result(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        console.log("in2");
+        var activeTab = tabs[0];
+        chrome.tabs.sendMessage(activeTab.id, {"message": "loaded", "result": filter_segment});
+    });
+}
+
+chrome.browserAction.onClicked.addListener(function(tab){
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var activeTab = tabs[0];
         chrome.tabs.sendMessage(activeTab.id, {"message": "loaded", "result": filter_segment});
       });
 });
+
 
 
 //对每一个请求都做了一遍过滤
@@ -137,7 +149,6 @@ chrome.browserAction.onClicked.addListener(function(tab){
 //相当于把别人截住了然后自己算了一个让自己满意的结果，最后放行。
 
 chrome.webRequest.onBeforeRequest.addListener(function(details) {
-    console.log(details.url);
     if(!GLOBAL_SWITCH)
         return {cancel: false};
     // ://comment.bilibili.com/?rc/?数字.debug.xml

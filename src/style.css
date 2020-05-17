@@ -1,11 +1,9 @@
-#ykPlayer .ynk-playback-control,
-#r-con .ynk-playback-control
-#flashbox .ynk-playback-control {
-    display: none;
+
+.ynk-playback-control{
+    background-color: #eee;
+    font-family: '微软雅黑', 'Microsoft Yahei', '黑体', sans-serif;
+    
 }
-
-#ykPlayer:hover .ynk-playback-control,
-
-#flashbox:hover .ynk-playback-control {
-    display: inherit;
+li:hover {
+    background-color: #f7f7f7;
 }
