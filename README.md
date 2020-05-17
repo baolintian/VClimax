@@ -93,7 +93,7 @@ V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/downl
 
 ![](./result/pornhub.jpg)
 
-设置这样：
+甚至这样：
 
 ![](./result/pornhub2.jpg)
 
