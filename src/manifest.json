@@ -20,7 +20,8 @@
     
     "options_page": "options/options.html",
     "browser_action": {
-        "default_icon": "assets/logo.png"
+        "default_icon": "assets/logo.png",
+        "default_popup": "popup/popup.html"
     },
     "content_scripts": [
         {

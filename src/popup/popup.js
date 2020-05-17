@@ -1,3 +1,9 @@
+function id(x) {
+    return document.getElementById(x);
+}
+var options_href=chrome.runtime.getURL('options/options.html');
+id('VClimax-logo').href=options_href;
+
 chrome.runtime.getBackgroundPage(function(bgpage) {
     var enabled=bgpage.GLOBAL_SWITCH;
     var btn=document.getElementById('switch');
