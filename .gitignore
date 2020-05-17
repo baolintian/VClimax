@@ -1,4 +1,4 @@
 *.crx
 *.zip
 *.pem
-./zhihu
+./zhihu/*
