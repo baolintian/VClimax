@@ -112,12 +112,15 @@
             <tr>
                 <td>弹幕套路</td>
                 <td>
-                    <p>满足同样特征的弹幕，即使内容不同也会被合并。</p>
+                    <p>满足正则表达式规则，则会提取出来进行计数</p>
                     <form id="newtaolu-form">
                         <p>
                             <input id="newtaolu-pattern" placeholder="正则表达式">
                             →
                             <input id="newtaolu-name" placeholder="替换文本">
+                            <label for="newtaolu-threshold">阈值：</label>
+
+                            <input id="newtaolu-threshold" type="number" min="1" step="1">
                             <button type="submit">添加</button>
                         </p>
                     </form>

@@ -102,7 +102,6 @@ chrome.runtime.onMessage.addListener(
                 upBtn.value = filter_segment[i]["start"];
                 upBtn.appendChild(document.createTextNode("第"+i+"个>>   "+sec2format(filter_segment[i]["start"])));
                 upBtn.addEventListener("click", function () {
-                    console.log($(this).attr("value"));
                     max_wait_time = 0;
                     while($video === undefined){
                         $video = document.querySelector(videoSeletor);

@@ -12,11 +12,16 @@ function parse(dom,tabid) {
     for(i=0; i<extra_number; i++){
         time_stamp[i] = new Array();
     }
-
+    var taolus_threshold = new Array(extra_number);
+    var index = 0;
+    for(var name in TAOLUS){
+        taolus_threshold[index++] = TAOLUS[name][1];
+    }
+    
     function detaolu(text) {
         var index = 0;
         for(var name in TAOLUS){
-            if(TAOLUS[name].test(text))
+            if(TAOLUS[name][0].test(text))
                 return index;
             index += 1;
         }
@@ -44,6 +49,7 @@ function parse(dom,tabid) {
         extra_keypoint[i] = new Array();
     }
     
+    console.log("time_stamp", time_stamp);
     for(i=0; i<extra_number; i++){
         var pre = -1;
         var count = 0;
@@ -55,16 +61,17 @@ function parse(dom,tabid) {
             }
             //两个匹配的关键词的时间间隔不能超过5s
             if(time_stamp[i][j]-time_stamp[i][j-1]>5){
-                if(count-1>=3){
-                    extra_keypoint[i].push(Math.max(pre-5, 0));
+                if(count-1>=taolus_threshold[i]){
+                    extra_keypoint[i].push(pre);
                 }
                 pre = time_stamp[i][j];
                 count = 1;
             }
         }
-        if(pre !=-1&&count>=3)
-            extra_keypoint[i].push(Math.max(pre-5, 0));
+        if(pre !=-1&&count>=taolus_threshold[i])
+            extra_keypoint[i].push(pre);
     }
+    
     var result_set = {};
     var index = 0;
     for(var name in TAOLUS){
@@ -96,7 +103,8 @@ function parse(dom,tabid) {
     });
 
     //TODO: 将这些参数供使用者选择
-    var interval = localStorage['SAMPLE_INTERVAL'];//default 20;
+    //2020.5.17 finished.
+    var interval = localStorage['SAMPLE_INTERVAL'];//default 30;
     var radis = localStorage['RADIS'];//10
     var min_interval = localStorage['MIN_INTERVAL'];//5
 
@@ -105,7 +113,7 @@ function parse(dom,tabid) {
 
     
     var tot_segment = 0;
-    var threshold = localStorage['FILTER_THRESHOLD'];//50
+    var threshold = localStorage['FILTER_THRESHOLD'];//100
     
 
     var segment_sample = new Array(20);

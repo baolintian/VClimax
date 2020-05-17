@@ -19,14 +19,18 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
     for(var key in cfg_taolus) {
         var container=document.createElement('li'),
             code1=document.createElement('code'),
-            spliter=document.createElement('span'),
+            spliter1=document.createElement('span'),
             code2=document.createElement('code'),
-            deletebtn=document.createElement('button');
+            deletebtn=document.createElement('button'),
+            spliter2=document.createElement('span'),
+            code3=document.createElement('code');
             
-        code1.textContent=cfg_taolus[key].source;
-        spliter.textContent=' → ';
+        code1.textContent=cfg_taolus[key][0];
+        spliter1.textContent=' → ';
         code2.textContent=key;
         deletebtn.textContent='删除';
+        spliter2.textContent='     触发阈值： ';
+        code3.textContent=cfg_taolus[key][1];
         (function(key) {deletebtn.addEventListener('click',function() {
             delete cfg_taolus[key];
             localStorage['TAOLUS']=bgpage.toholyjson(cfg_taolus);
@@ -35,8 +39,10 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
         
         container.appendChild(deletebtn);
         container.appendChild(code1);
-        container.appendChild(spliter);
+        container.appendChild(spliter1);
         container.appendChild(code2);
+        container.appendChild(spliter2);
+        container.appendChild(code3);
         taolus.appendChild(container);
     }
     
@@ -51,7 +57,9 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
     id('newtaolu-form').addEventListener('submit',function(e) {
         e.preventDefault();
         var key=id('newtaolu-name').value;
-        cfg_taolus[key]=new RegExp(id('newtaolu-pattern').value);
+        cfg_taolus[key] = new Array(2);
+        cfg_taolus[key][0]=new RegExp(id('newtaolu-pattern').value);
+        cfg_taolus[key][1]=id('newtaolu-threshold').value;
         localStorage['TAOLUS']=bgpage.toholyjson(cfg_taolus);
         reload();
     });
@@ -59,8 +67,8 @@ chrome.runtime.getBackgroundPage(function(bgpage) {
     function update() {
         
         localStorage['FLASH_NOTIF']=id('flash-notif').checked?'on':'off';
-        localStorage['SAMPLE_INTERVAL'] = parseInt(id('sample-interval').value)>0?parseInt(id('sample-interval').value):20;
-        localStorage['FILTER_THRESHOLD'] = parseInt(id('filter-threshold').value)>0?parseInt(id('filter-threshold').value):50;
+        localStorage['SAMPLE_INTERVAL'] = parseInt(id('sample-interval').value)>0?parseInt(id('sample-interval').value):30;
+        localStorage['FILTER_THRESHOLD'] = parseInt(id('filter-threshold').value)>0?parseInt(id('filter-threshold').value):100;
         localStorage['RADIS'] = parseInt(id('radis').value)>0?parseInt(id('radis').value):10;
         localStorage['MIN_INTERVAL'] = parseInt(id('min-interval').value)>0?parseInt(id('min-interval').value):5;
         reload();

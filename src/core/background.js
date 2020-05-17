@@ -28,14 +28,18 @@ function parse_danmu_url(url) {
 function fromholyjson(txt) {
     var item=JSON.parse(txt);
     for(var key in item)
-        item[key]=RegExp(item[key]);
+        item[key][0]=RegExp(item[key][0]);
+    
     return item;
 }
 
 function toholyjson(obj) {
     var item={};
-    for(var key in obj)
-        item[key]=obj[key].source;
+    for(var key in obj){
+        item[key] = new Array(2);
+        item[key][0]=obj[key][0].source;
+        item[key][1]=obj[key][1];
+    }
     return JSON.stringify(item);
 }
 
@@ -53,15 +57,15 @@ function loadconfig() {
 }
 
 
-localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":".*(空降|降落).*", "搞笑": ".*(哈哈)+.*"}';
+localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":[".*(空降|降落).*", 2], "搞笑": [".*((哈){2,}|([hH]{2,})).*", 10]}';
 localStorage['FLASH_NOTIF']=localStorage['FLASH_NOTIF']||'on';
 
 
 
-localStorage['SAMPLE_INTERVAL'] = localStorage['SAMPLE_INTERVAL']||20;
+localStorage['SAMPLE_INTERVAL'] = localStorage['SAMPLE_INTERVAL']||30;
 localStorage['RADIS'] = localStorage['RADIS']||10;
 localStorage['MIN_INTERVAL'] = localStorage['MIN_INTERVAL']||5;
-localStorage['FILTER_THRESHOLD'] = localStorage['FILTER_THRESHOLD']||50;
+localStorage['FILTER_THRESHOLD'] = localStorage['FILTER_THRESHOLD']||100;
 loadconfig();
 
 chrome.notifications.onButtonClicked.addListener(function(notifid,btnindex) {
