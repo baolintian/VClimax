@@ -1,6 +1,8 @@
 # VClimax
 
 <div style = "font-size: 2em;">基于弹幕的视频精彩片段推荐系统。</a>
+![](./src/assets/logo.png)
+
 
 
 

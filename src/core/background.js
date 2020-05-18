@@ -57,7 +57,11 @@ function loadconfig() {
 }
 
 
-localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":[".*(空降|降落).*", 2], "搞笑": [".*((哈){2,}|([hH]{2,})).*", 10]}';
+localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":[".*(空降|降落).*", 2], \
+                                                "名场面": [".*((名场面)|(合影)).*", 10], \
+                                                "搞笑": [".*((哈){2,}|([hH]{2,})).*", 10], \
+                                                "可爱":[".*([Aa][Ww][Ss][Ll])|(可爱)", 5], \
+                                                "福利": [".*腿.*", 5]}';
 localStorage['FLASH_NOTIF']=localStorage['FLASH_NOTIF']||'on';
 
 
