@@ -26,8 +26,13 @@ idea来源: [如何自动做一期梗百科](https://www.bilibili.com/video/BV1Y
 
 ## 下载安装
 
-Google商店: [下载](<https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn?utm_source=chrome-ntp-icon>)
-V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/download/v1.0.0/VCLlimax.crx)中下载使用，需要打开开发者模式。
+#### [→ 点我安装 ←](https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn) （仅支持 Chrome）]
+
+不支持其他下载途径。
+
+> Extensions hosted outside of the [Chrome Web Store](http://chrome.google.com/webstore) can only be installed by Linux users.
+
+~~还有一个办法，通过下载源代码，打开开发者模式进行源代码加载安装。~~
 
 
 
@@ -60,6 +65,32 @@ V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/downl
 
 
 关于跳过OP、视频搞笑、视频刷梗的地方，可以通过正则表达式直接匹配操作。
+
+如：
+
++ 名场面
+
+正则规则：`.*(名场面)|(合影).*`，阈值：10
+
+![](./result/popular.png)
+
+
+
+![](./result/dongmei.png)
+
+
+
++ 福利
+
+请自行探索关键词进行匹配
+
++ 可爱
+
+正则规则：`.*([Aa][Ww][Ss][Ll])|(可爱).*`，阈值：5
+
+![](./result/awsl.png)
+
+![](./result/awsl2.png)
 
 ## 展示示例
 

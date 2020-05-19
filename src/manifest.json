@@ -1,6 +1,6 @@
 {
     "name": "VClimax",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "通过弹幕找出最精彩的片段，Make Bilibili Great Again!",
     "icons": {
         "128": "assets/logo.png"
