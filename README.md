@@ -1,5 +1,9 @@
 # VClimax
 
+[![Chrome Web Store - Version](https://img.shields.io/chrome-web-store/v/cfbdjghimmcjmbhhbhmkpebdjjieapkn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn)
+[![Chrome Web Store - Downloads](https://img.shields.io/chrome-web-store/d/cfbdjghimmcjmbhhbhmkpebdjjieapkn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn)
+[![Chrome Web Store - Rating](https://img.shields.io/chrome-web-store/rating/cfbdjghimmcjmbhhbhmkpebdjjieapkn.svg?style=flat-square)](https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn)
+
 基于弹幕的视频精彩片段推荐系统。
 
 ![](./src/assets/logo.png)
@@ -22,8 +26,8 @@ idea来源: [如何自动做一期梗百科](https://www.bilibili.com/video/BV1Y
 
 ## 下载安装
 
-Google商店目前还在审核中。
-V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/download/v1.0.0/VCLlimax.crx)中下载使用。
+Google商店: [下载](<https://chrome.google.com/webstore/detail/vclimax/cfbdjghimmcjmbhhbhmkpebdjjieapkn?utm_source=chrome-ntp-icon>)
+V1.0.0目前可在[release](https://github.com/baolintian/VClimax/releases/download/v1.0.0/VCLlimax.crx)中下载使用，需要打开开发者模式。
 
 
 
