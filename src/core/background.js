@@ -5,6 +5,8 @@ var GLOBAL_SWITCH=true;
 var DANMU_URL_FILTER=['*://comment.bilibili.com/*','*://api.bilibili.com/x/v1/dm/*','*://api.bilibili.com/x/v2/dm/*']
 var TRAD_DANMU_URL_RE=/(.+):\/\/comment\.bilibili\.com\/(?:rc\/)?(?:dmroll,[\d\-]+,)?(\d+)(?:\.xml)?(\?debug)?$/;
 var NEW_DANMU_NORMAL_URL_RE=/(.+):\/\/api\.bilibili\.com\/x\/v1\/dm\/list.so\?oid=(\d+)(\&debug)?$/;
+//https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=113554385&pid=65118017&segment_index=1
+var NEW_DANMU_FILM_URL_RE=/(.+):\/\/api\.bilibili\.com\/x\/v2\/dm\/web\/seg.so\?type=\d+\&oid=(\d+)\&pid=(\d+)\&segment_index=(\d+)$/;
 var NEW_DANMU_HISTORY_URL_RE=/(.+):\/\/api\.bilibili\.com\/x\/v2\/dm\/history\?type=\d+&oid=(\d+)&date=[\d\-]+(\&debug)?$/;
 var filter_segment=[];
 
@@ -20,6 +22,9 @@ function parse_danmu_url(url) {
         return addtype('list',NEW_DANMU_NORMAL_URL_RE.exec(url));
     else if(url.indexOf('/history?')!==-1) {
         return addtype('history',NEW_DANMU_HISTORY_URL_RE.exec(url));
+    }
+    else if(url.indexOf('/seg.so?')!==-1){
+        return addtype('film',NEW_DANMU_FILM_URL_RE.exec(url));
     }
     else
         return null;
@@ -58,7 +63,7 @@ function loadconfig() {
 
 
 localStorage['TAOLUS']=localStorage['TAOLUS']||'{"空降":[".*(空降|降落).*", 2], \
-                                                "名场面": [".*((名场面)|(合影)).*", 10], \
+                                                "名场面": [".*((名场面)|(合影)|(世界名画)).*", 3], \
                                                 "搞笑": [".*((哈){2,}|([hH]{2,})).*", 10], \
                                                 "可爱":[".*([Aa][Ww][Ss][Ll])|(可爱)", 5], \
                                                 "福利": [".*腿.*", 5]}';
